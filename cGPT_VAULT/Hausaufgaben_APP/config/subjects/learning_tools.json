@@ -1,0 +1,152 @@
+{
+  "version": "1.0",
+  "context": "HEBO_TUTOR",
+  "name": "learning_tools",
+  "description": "Konfiguration für interaktive Lernformate (Quiz, Flashcards, Selbsttests, Rätsel) für den HEBO Hausaufgaben-Tutor.",
+
+  "global_rules": {
+    "no_full_solutions": true,
+    "focus": [
+      "Verständnis prüfen",
+      "Aktives Abrufen fördern",
+      "Fehler als Lernchance nutzen"
+    ],
+    "feedback_principles": [
+      "Konstruktiv, freundlich und sachlich bleiben.",
+      "Fehler kurz erklären, ohne die Person zu bewerten.",
+      "Wenn sinnvoll, eine Anschlussfrage stellen."
+    ]
+  },
+
+  "question_amount_handling": {
+    "ask_for_amount": true,
+    "default_amount": 5,
+    "max_amount": 20,
+    "min_amount": 1,
+    "phrasing": [
+      "Wie viele Fragen möchtest du? (1–20 sind möglich)",
+      "Willst du lieber wenige Fragen oder eine größere Runde?",
+      "Wie viele Quizfragen soll ich dir stellen?"
+    ],
+    "fallback_behavior": {
+      "invalid_input": "Bitte gib eine Zahl zwischen 1 und 20 ein.",
+      "no_preference": "Alles klar – dann wähle ich 5 Fragen."
+    }
+  },
+
+  "modes": {
+    "quiz": {
+      "label": "Quizmodus",
+      "description": "Verständnisfragen mit sofortigem Feedback.",
+      "question_types": [
+        "multiple_choice",
+        "kurze_freie_antwort",
+        "wahr_falsch"
+      ],
+      "flow": [
+        "1. Fach und Klassenstufe klären.",
+        "2. Thema im Fach klären.",
+        "3. Anzahl der Fragen erfragen.",
+        "4. Fragen einzeln stellen.",
+        "5. Nach jeder Antwort Feedback geben.",
+        "6. Am Ende kurzes Gesamtfeedback geben."
+      ],
+      "constraints": [
+        "Keine originalen Prüfungsaufgaben 1:1 nachbauen.",
+        "Keine vollständigen Musterlösungen für Schulaufgaben liefern.",
+        "Fragen an die Klassenstufe anpassen."
+      ]
+    },
+
+    "flashcards": {
+      "label": "Karteikartenmodus",
+      "description": "Frage-Antwort-Karten zum aktiven Lernen.",
+      "use_cases": [
+        "Vokabeln",
+        "Definitionen",
+        "Grammatikbegriffe",
+        "Formeln und Fachbegriffe"
+      ],
+      "flow": [
+        "1. Fach, Klassenstufe und Thema klären.",
+        "2. Anzahl der Karten erfragen.",
+        "3. Jede Karte einzeln präsentieren: erst Frage, dann Schülerantwort.",
+        "4. Danach die Lösung nennen und kurz erklären.",
+        "5. Am Ende 2–3 schwierigere Karten wiederholen."
+      ],
+      "constraints": [
+        "Antworten kurz und prägnant halten.",
+        "Nicht mehr als 15 Karten pro Durchgang."
+      ]
+    },
+
+    "self_test": {
+      "label": "Selbsttest",
+      "description": "Kleiner Lernstands-Check zu einem Thema.",
+      "flow": [
+        "1. Thema klären (z.B. 'Bruchrechnung', 'If-Sätze', 'Fotosynthese').",
+        "2. Anzahl der Fragen erfragen.",
+        "3. Fragen mittlerer Schwierigkeit stellen.",
+        "4. Antworten kurz kommentieren.",
+        "5. Zusammenfassung: Was klappt gut, was braucht Übung."
+      ],
+      "scoring": {
+        "allowed": true,
+        "style": "sanft",
+        "recommended_phrases": [
+          "Du hast X von Y Fragen gut beantwortet.",
+          "Hier bist du schon sicher – hier kannst du noch üben."
+        ],
+        "avoid": [
+          "Abwertende Begriffe wie 'schlecht' oder 'versagt'.",
+          "Vergleiche mit anderen Schülern oder Gruppen."
+        ]
+      }
+    },
+
+    "raetsel": {
+      "label": "Rätsel & Mini-Challenges",
+      "description": "Kleine, fachbezogene Knobelaufgaben.",
+      "use_cases": [
+        "Mathe-Knobelaufgaben",
+        "Sprachspiele in Deutsch/Englisch",
+        "Begriffs-Rätsel in Naturwissenschaften"
+      ],
+      "constraints": [
+        "Immer fachlichen Bezug sicherstellen.",
+        "Keine reinen Fun-Rätsel ohne Lernwert.",
+        "Lösungen erst nach einer Denkphase nennen."
+      ]
+    }
+  },
+
+  "subject_integration": {
+    "source": "faecher_auswahl.json",
+    "respect_enabled_flag": true,
+    "default_enabled_modes": [
+      "quiz",
+      "flashcards",
+      "self_test"
+    ],
+    "default_mode_rules": {
+      "description": "Standardverhalten für alle Fächer aus faecher_auswahl.json.",
+      "rule_1": "Wenn ein Fach aktiviert ist (enabled: true), sind Quiz, Flashcards und Selbsttests erlaubt.",
+      "rule_2": "Rätsel werden nur in Fächern eingesetzt, bei denen es sinnvoll ist (siehe overrides).",
+      "rule_3": "Wenn im Fächer-JSON Beispielthemen stehen, nutze diese als Orientierung; sonst Thema beim Schüler erfragen."
+    },
+    "overrides": {
+      "mathematik": {
+        "enabled_modes": ["quiz", "flashcards", "self_test", "raetsel"],
+        "notes": "Mathe eignet sich gut für Knobelrätsel und kurze Rechen-Challenges."
+      },
+      "deutsch": {
+        "enabled_modes": ["quiz", "flashcards", "self_test"],
+        "notes": "Rätsel nur, wenn klarer Bezug zu Rechtschreibung/Grammatik besteht."
+      },
+      "englisch": {
+        "enabled_modes": ["quiz", "flashcards", "self_test"],
+        "notes": "Starker Fokus auf Vokabeln, Zeiten und Satzmuster."
+      }
+    }
+  }
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dr. DirKInstitute LernTutor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Newsreader:opsz,wght@6..72,500;6..72,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <aside class="hero-panel">
+        <p class="eyebrow">Aus Prompt wird Produkt</p>
+        <h1>
+          <span class="title-line">Dr. DirKInstitute</span>
+          <span class="title-line">LernTutor</span>
+        </h1>
+        <p class="hero-copy">
+          Ein lernorientierter Tutor fuer Klassen 5 bis 13 mit Fachauswahl,
+          Lernmodi und sanfter Schritt-fuer-Schritt-Begleitung.
+        </p>
+
+        <div class="hero-grid">
+          <div class="info-card">
+            <span class="info-label">Didaktik</span>
+            <strong>Sokratisch statt vorsagen</strong>
+            <p>Die App fuehrt durch kleine naechste Schritte und vermeidet komplette Loesungen.</p>
+          </div>
+          <div class="info-card">
+            <span class="info-label">Zielgruppe</span>
+            <strong>Klasse 5 bis 13</strong>
+            <p>Sprache, Themen und Hinweise passen sich an die Klassenstufe an.</p>
+          </div>
+        </div>
+
+        <div class="brand-credit">
+          <img
+            class="brand-credit-logo"
+            src="../../public/branding/Logo.jpg"
+            alt="Dr. DirKInstitute Logo"
+          />
+          <p>[c] 2026 by Dr. Dirk Koetting - Dr. DirKInstitute</p>
+          <div class="brand-disclaimer">
+            <strong>Disclaimer</strong>
+            <p>
+              Dr. DirKInstitute LernTutor ist ein digitaler Lernbegleiter und
+              Tutor. Die App unterstuetzt beim Verstehen, Ueben und Strukturieren
+              von Lerninhalten, ersetzt aber keine Lehrkraft, keine individuelle
+              Fachberatung und keine schulische Bewertung.
+            </p>
+            <p>
+              Die Bearbeitung von Aufgaben, die Nutzung der Hinweise und die
+              fachliche Endkontrolle bleiben in der Eigenverantwortung des
+              Schuelers oder der Schuelerin.
+            </p>
+          </div>
+        </div>
+      </aside>
+
+      <main class="app-panel">
+        <section class="setup-panel">
+          <div class="section-heading">
+            <p class="eyebrow">Lernsitzung</p>
+            <h2>Start konfigurieren</h2>
+          </div>
+
+          <form id="setup-form" class="setup-form">
+            <label class="field">
+              <span>Klassenstufe</span>
+              <select id="grade-select" required>
+                <option value="">Bitte waehlen</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Schulart</span>
+              <select id="school-type-select" required>
+                <option value="">Bitte waehlen</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Fach</span>
+              <select id="subject-select" required>
+                <option value="">Bitte zuerst Klasse waehlen</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Lernmodus</span>
+              <select id="mode-select" required>
+                <option value="">Bitte Fach waehlen</option>
+              </select>
+            </label>
+
+            <label class="field field-wide">
+              <span>Thema oder Aufgabe</span>
+              <textarea
+                id="task-input"
+                rows="4"
+                placeholder="Zum Beispiel: Prozentrechnung, Gedichtanalyse oder Simple Past"
+                required
+              ></textarea>
+            </label>
+
+            <button type="submit" class="primary-btn">Lernsitzung starten</button>
+          </form>
+        </section>
+
+        <section class="session-panel">
+          <div class="section-heading">
+            <p class="eyebrow">Tutor</p>
+            <h2>Begleitete Lernhilfe</h2>
+          </div>
+
+          <div id="session-summary" class="session-summary empty">
+            Noch keine aktive Sitzung.
+          </div>
+
+          <div id="coach-card" class="coach-card hidden">
+            <div class="coach-block">
+              <span class="coach-label">Naechster Schritt</span>
+              <p id="next-step-text"></p>
+            </div>
+            <div class="coach-block">
+              <span class="coach-label">Tutorfrage</span>
+              <p id="question-text"></p>
+            </div>
+            <div class="coach-block">
+              <span class="coach-label">Lernhinweis</span>
+              <p id="hint-text"></p>
+            </div>
+          </div>
+
+          <form id="response-form" class="response-form hidden">
+            <label class="field field-wide">
+              <span>Deine Antwort oder dein Zwischenstand</span>
+              <textarea
+                id="student-response"
+                rows="5"
+                placeholder="Schreibe hier, was du schon weisst oder was du versucht hast."
+              ></textarea>
+            </label>
+            <button type="submit" class="secondary-btn">Antwort auswerten</button>
+          </form>
+
+          <div id="feedback-card" class="feedback-card hidden"></div>
+
+          <div id="print-actions" class="hidden">
+            <button id="print-pdf-button" type="button" class="secondary-btn">Ergebnis als PDF drucken</button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./config-data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

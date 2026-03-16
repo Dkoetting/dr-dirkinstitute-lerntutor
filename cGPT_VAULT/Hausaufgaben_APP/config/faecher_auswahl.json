@@ -1,0 +1,424 @@
+{
+  "version": "2.0",
+  "context": "HEBOTUTOR",
+  "description": "Zentrale Fächerliste für den HEBO Hausaufgaben-Tutor. Definiert alle verfügbaren Fächer, ihre Klassenstufen und Modulzuordnung.",
+  "subjects": [
+    {
+      "id": "deutsch",
+      "label": "Deutsch",
+      "enabled": true,
+      "grades": "5-13",
+      "module": "deutsch_tutor_v2.json",
+      "keywords": [
+        "deutsch",
+        "aufsatz",
+        "grammatik",
+        "rechtschreibung",
+        "interpretation",
+        "erörterung",
+        "inhaltsangabe"
+      ],
+      "example_topics": [
+        "Inhaltsangabe",
+        "Erörterung",
+        "Gedichtanalyse",
+        "Grammatik",
+        "Stilmittel"
+      ]
+    },
+    {
+      "id": "englisch",
+      "label": "Englisch",
+      "enabled": true,
+      "grades": "5-13",
+      "module": "englisch_tutor_v2.json",
+      "keywords": [
+        "englisch",
+        "english",
+        "grammar",
+        "vokabeln",
+        "essay",
+        "übersetzung",
+        "text"
+      ],
+      "example_topics": [
+        "Simple Past",
+        "If-Clauses",
+        "Comment",
+        "Essay",
+        "Vokabeln"
+      ]
+    },
+    {
+      "id": "mathematik",
+      "label": "Mathematik",
+      "enabled": true,
+      "grades": "5-13",
+      "module": "mathe_tutor_v2.json",
+      "keywords": [
+        "mathe",
+        "mathematik",
+        "rechnen",
+        "algebra",
+        "geometrie",
+        "analysis",
+        "stochastik",
+        "vektoren"
+      ],
+      "example_topics": [
+        "Bruchrechnung",
+        "Gleichungen",
+        "Funktionen",
+        "Analysis",
+        "Wahrscheinlichkeit"
+      ]
+    },
+    {
+      "id": "biologie",
+      "label": "Biologie",
+      "enabled": true,
+      "grades": "5-13",
+      "module": "biologie_tutor_v2.json",
+      "keywords": [
+        "biologie",
+        "bio",
+        "zelle",
+        "organismus",
+        "genetik",
+        "ökologie",
+        "evolution"
+      ],
+      "example_topics": [
+        "Zellaufbau",
+        "Fotosynthese",
+        "Genetik",
+        "Ökosystem",
+        "Neurobiologie"
+      ]
+    },
+    {
+      "id": "chemie",
+      "label": "Chemie",
+      "enabled": true,
+      "grades": "7-13",
+      "module": "chemie_tutor_v2.json",
+      "keywords": [
+        "chemie",
+        "atom",
+        "molekül",
+        "reaktion",
+        "säure",
+        "base",
+        "organisch",
+        "stöchiometrie"
+      ],
+      "example_topics": [
+        "Atombau",
+        "Reaktionsgleichungen",
+        "Säuren/Basen",
+        "Organische Chemie",
+        "Stöchiometrie"
+      ]
+    },
+    {
+      "id": "physik",
+      "label": "Physik",
+      "enabled": true,
+      "grades": "5-13",
+      "module": "physik_tutor_v2.json",
+      "keywords": [
+        "physik",
+        "kraft",
+        "energie",
+        "elektrizität",
+        "optik",
+        "mechanik",
+        "welle",
+        "schwingung"
+      ],
+      "example_topics": [
+        "Kraft und Bewegung",
+        "Ohmsches Gesetz",
+        "Optik",
+        "Elektromagnetismus",
+        "Wellen"
+      ]
+    },
+    {
+      "id": "geschichte",
+      "label": "Geschichte",
+      "enabled": true,
+      "grades": "5-13",
+      "module": "geschichte_tutor_v1.json",
+      "keywords": [
+        "geschichte",
+        "histor",
+        "epochen",
+        "quellen",
+        "krieg",
+        "weimarer republik",
+        "nationalsozialismus",
+        "antike"
+      ],
+      "example_topics": [
+        "Antike",
+        "Mittelalter",
+        "Neuzeit",
+        "Weimarer Republik",
+        "NS-Zeit",
+        "Kalter Krieg"
+      ]
+    },
+    {
+      "id": "geographie",
+      "label": "Geographie / Erdkunde",
+      "enabled": true,
+      "grades": "5-13",
+      "module": "geographie_tutor_v1.json",
+      "keywords": [
+        "geographie",
+        "erdkunde",
+        "klima",
+        "landschaft",
+        "bevölkerung",
+        "wirtschaft",
+        "karte"
+      ],
+      "example_topics": [
+        "Klimazonen",
+        "Plattentektonik",
+        "Bevölkerungsgeographie",
+        "Wirtschaftsräume",
+        "Globalisierung"
+      ]
+    },
+    {
+      "id": "politik_sozialkunde",
+      "label": "Politik / Sozialkunde",
+      "enabled": true,
+      "grades": "8-13",
+      "module": "politik_tutor_v1.json",
+      "keywords": [
+        "politik",
+        "sozialkunde",
+        "demokratie",
+        "parlament",
+        "wahlen",
+        "recht",
+        "europäische union"
+      ],
+      "example_topics": [
+        "Demokratie",
+        "Gewaltenteilung",
+        "Bundestag",
+        "EU",
+        "Grundrechte"
+      ]
+    },
+    {
+      "id": "ethik_philosophie",
+      "label": "Ethik / Philosophie",
+      "enabled": true,
+      "grades": "5-13",
+      "module": "ethik_tutor_v1.json",
+      "keywords": [
+        "ethik",
+        "philosophie",
+        "moral",
+        "menschenwürde",
+        "gerechtigkeit",
+        "kant",
+        "utilitarismus"
+      ],
+      "example_topics": [
+        "Fairness",
+        "Menschenwürde",
+        "Utilitarismus",
+        "Kategorischer Imperativ",
+        "KI-Ethik"
+      ]
+    },
+    {
+      "id": "religion",
+      "label": "Religion",
+      "enabled": true,
+      "grades": "5-13",
+      "module": "religion_tutor_v1.json",
+      "keywords": [
+        "religion",
+        "bibel",
+        "jesus",
+        "weltreligionen",
+        "kirche",
+        "glauben"
+      ],
+      "example_topics": [
+        "Bibelkunde",
+        "Weltreligionen",
+        "Religionsgeschichte",
+        "Religion und Gesellschaft"
+      ]
+    },
+    {
+      "id": "informatik",
+      "label": "Informatik",
+      "enabled": true,
+      "grades": "5-13",
+      "module": "informatik_tutor_v1.json",
+      "keywords": [
+        "informatik",
+        "programmieren",
+        "algorithmus",
+        "python",
+        "datenbank",
+        "netzwerk",
+        "code"
+      ],
+      "example_topics": [
+        "Algorithmen",
+        "Python-Grundlagen",
+        "Datenstrukturen",
+        "Netzwerke",
+        "Datenschutz"
+      ]
+    },
+    {
+      "id": "kuenstliche_intelligenz",
+      "label": "Künstliche Intelligenz",
+      "enabled": true,
+      "grades": "5-13",
+      "module": "ki_tutor_v1.json",
+      "keywords": [
+        "ki",
+        "künstliche intelligenz",
+        "machine learning",
+        "ml",
+        "algorithmen",
+        "neuronale netze",
+        "chatgpt",
+        "deepfake"
+      ],
+      "example_topics": [
+        "Was ist KI?",
+        "Maschinelles Lernen (Grundlagen)",
+        "LLMs",
+        "KI-Ethik",
+        "EU AI Act"
+      ]
+    },
+    {
+      "id": "nwt",
+      "label": "Naturwissenschaft und Technik (NwT)",
+      "enabled": true,
+      "grades": "8-13",
+      "module": "nwt_tutor_v1.json",
+      "keywords": [
+        "nwt",
+        "naturwissenschaft und technik",
+        "projekt",
+        "experiment",
+        "energie",
+        "sensor",
+        "robotik"
+      ],
+      "example_topics": [
+        "Experiment planen",
+        "Energiesysteme",
+        "Robotik",
+        "Brückenbau",
+        "Brennstoffzelle"
+      ]
+    },
+    {
+      "id": "franzoesisch",
+      "label": "Französisch",
+      "enabled": true,
+      "grades": "6-13",
+      "module": "franzoesisch_tutor_v1.json",
+      "keywords": [
+        "französisch",
+        "franzoesisch",
+        "french",
+        "grammaire",
+        "vokabeln franz",
+        "conjugaison",
+        "franz"
+      ],
+      "example_topics": [
+        "Présent und Passé composé",
+        "Imparfait vs. Passé composé",
+        "Subjonctif",
+        "Vokabeln Alltag/Schule/Freizeit",
+        "Résumé und Commentaire"
+      ]
+    },
+    {
+      "id": "spanisch",
+      "label": "Spanisch",
+      "enabled": true,
+      "grades": "6-13",
+      "module": "spanisch_tutor_v1.json",
+      "keywords": [
+        "spanisch",
+        "español",
+        "spanisch-vokabeln",
+        "gramática"
+      ],
+      "example_topics": [
+        "Presente",
+        "Pretérito indefinido/imperfecto",
+        "Subjuntivo",
+        "Texte schreiben"
+      ]
+    },
+    {
+      "id": "latein",
+      "label": "Latein",
+      "enabled": true,
+      "grades": "6-13",
+      "module": "latein_tutor_v1.json",
+      "keywords": [
+        "latein",
+        "latin",
+        "deklinieren",
+        "konjugieren",
+        "übersetzung",
+        "vokabeln latein"
+      ],
+      "example_topics": [
+        "Deklinationen",
+        "Konjugationen",
+        "AcI",
+        "Partizip-Konstruktionen",
+        "Caesar/Cicero/Vergil/Ovid"
+      ]
+    },
+    {
+      "id": "musik",
+      "label": "Musik",
+      "enabled": true,
+      "grades": "5-13",
+      "module": "musik_tutor_v1.json",
+      "keywords": [
+        "musik",
+        "noten",
+        "rhythmus",
+        "akkorde",
+        "epochen",
+        "werkanalyse"
+      ],
+      "example_topics": [
+        "Notenlesen",
+        "Dur/Moll",
+        "Barock",
+        "Klassik",
+        "Romantik",
+        "Werkanalyse"
+      ]
+    }
+  ],
+  "display_menu": {
+    "header": "Verfügbare Fächer:",
+    "show_planned_note": false
+  }
+}
