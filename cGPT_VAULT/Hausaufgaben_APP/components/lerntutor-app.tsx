@@ -378,26 +378,6 @@ export function LernTutorApp({ config }: { config: LernTutorConfig }) {
 
           <form className="setup-form" onSubmit={handleStartSession}>
             <label className="field">
-              <span>Klassenstufe</span>
-              <select
-                value={grade}
-                onChange={(event) => {
-                  setGrade(event.target.value);
-                  setSubjectId("");
-                  setModeId("");
-                }}
-                required
-              >
-                <option value="">{schoolType ? "Bitte waehlen" : "Bitte zuerst Schulart waehlen"}</option>
-                {availableGrades.map((entry) => (
-                  <option key={entry} value={entry}>
-                    Klasse {entry}
-                  </option>
-                ))}
-              </select>
-            </label>
-
-            <label className="field">
               <span>Schulart</span>
               <select
                 value={schoolType}
@@ -417,6 +397,26 @@ export function LernTutorApp({ config }: { config: LernTutorConfig }) {
                 {schoolTypes.map((entry: string) => (
                   <option key={entry} value={entry}>
                     {formatSchoolTypeLabel(entry)}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="field">
+              <span>Klassenstufe</span>
+              <select
+                value={grade}
+                onChange={(event) => {
+                  setGrade(event.target.value);
+                  setSubjectId("");
+                  setModeId("");
+                }}
+                required
+              >
+                <option value="">{schoolType ? "Bitte waehlen" : "Bitte zuerst Schulart waehlen"}</option>
+                {availableGrades.map((entry) => (
+                  <option key={entry} value={entry}>
+                    Klasse {entry}
                   </option>
                 ))}
               </select>
