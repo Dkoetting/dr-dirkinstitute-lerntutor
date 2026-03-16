@@ -52,6 +52,19 @@ const modeCatalog: Record<string, { label: string; intro: string }> = {
   },
 };
 
+const schoolTypeGradeRanges: Record<string, [number, number]> = {
+  gymnasium: [5, 13],
+  realschule: [5, 10],
+  haupt_mittel_schule: [5, 10],
+  gesamtschule_gemeinschaftsschule: [5, 13],
+  berufliches_gymnasium_berufskolleg: [11, 13],
+};
+
+const schoolTypeBlockedSubjects: Record<string, string[]> = {
+  realschule: ["latein"],
+  haupt_mittel_schule: ["latein"],
+};
+
 function parseGrades(gradesValue: string) {
   if (!gradesValue.includes("-")) {
     return [];
@@ -121,6 +134,21 @@ function getLevelForGrade(grade: number) {
   return "oberstufe";
 }
 
+function isGradeAllowedForSchoolType(grade: number, schoolType: string) {
+  const range = schoolTypeGradeRanges[schoolType];
+
+  if (!range) {
+    return true;
+  }
+
+  return grade >= range[0] && grade <= range[1];
+}
+
+function isSubjectAllowedForSchoolType(subjectId: string, schoolType: string) {
+  const blocked = schoolTypeBlockedSubjects[schoolType] ?? [];
+  return !blocked.includes(subjectId);
+}
+
 export function LernTutorApp({ config }: { config: LernTutorConfig }) {
   const subjects = normalizeSubjects(config.subjects);
   const schoolTypes =
@@ -141,8 +169,15 @@ export function LernTutorApp({ config }: { config: LernTutorConfig }) {
   const [session, setSession] = useState<SessionState | null>(null);
   const [feedback, setFeedback] = useState("");
 
+  const availableGrades = Array.from({ length: 9 }, (_, index) => index + 5).filter((entry) =>
+    schoolType ? isGradeAllowedForSchoolType(entry, schoolType) : true,
+  );
+
   const availableSubjects = subjects.filter((subject) =>
-    grade ? subject.gradesList.includes(Number(grade)) : false,
+    grade
+      ? subject.gradesList.includes(Number(grade)) &&
+        (!schoolType || isSubjectAllowedForSchoolType(subject.id, schoolType))
+      : false,
   );
 
   const selectedSubject = subjects.find((subject) => subject.id === subjectId) ?? null;
@@ -287,13 +322,17 @@ export function LernTutorApp({ config }: { config: LernTutorConfig }) {
           <form className="setup-form" onSubmit={handleStartSession}>
             <label className="field">
               <span>Klassenstufe</span>
-              <select value={grade} onChange={(event) => {
-                setGrade(event.target.value);
-                setSubjectId("");
-                setModeId("");
-              }} required>
+              <select
+                value={grade}
+                onChange={(event) => {
+                  setGrade(event.target.value);
+                  setSubjectId("");
+                  setModeId("");
+                }}
+                required
+              >
                 <option value="">Bitte waehlen</option>
-                {Array.from({ length: 9 }, (_, index) => index + 5).map((entry) => (
+                {availableGrades.map((entry) => (
                   <option key={entry} value={entry}>
                     Klasse {entry}
                   </option>
@@ -303,7 +342,20 @@ export function LernTutorApp({ config }: { config: LernTutorConfig }) {
 
             <label className="field">
               <span>Schulart</span>
-              <select value={schoolType} onChange={(event) => setSchoolType(event.target.value)} required>
+              <select
+                value={schoolType}
+                onChange={(event) => {
+                  const nextSchoolType = event.target.value;
+                  setSchoolType(nextSchoolType);
+                  setSubjectId("");
+                  setModeId("");
+
+                  if (grade && !isGradeAllowedForSchoolType(Number(grade), nextSchoolType)) {
+                    setGrade("");
+                  }
+                }}
+                required
+              >
                 <option value="">Bitte waehlen</option>
                 {schoolTypes.map((entry: string) => (
                   <option key={entry} value={entry}>
@@ -315,10 +367,14 @@ export function LernTutorApp({ config }: { config: LernTutorConfig }) {
 
             <label className="field">
               <span>Fach</span>
-              <select value={subjectId} onChange={(event) => {
-                setSubjectId(event.target.value);
-                setModeId("");
-              }} required>
+              <select
+                value={subjectId}
+                onChange={(event) => {
+                  setSubjectId(event.target.value);
+                  setModeId("");
+                }}
+                required
+              >
                 <option value="">{grade ? "Fach waehlen" : "Bitte zuerst Klasse waehlen"}</option>
                 {availableSubjects.map((entry) => (
                   <option key={entry.id} value={entry.id}>
