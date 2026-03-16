@@ -52,17 +52,61 @@ const modeCatalog: Record<string, { label: string; intro: string }> = {
   },
 };
 
-const schoolTypeGradeRanges: Record<string, [number, number]> = {
-  gymnasium: [5, 13],
-  realschule: [5, 10],
-  haupt_mittel_schule: [5, 10],
-  gesamtschule_gemeinschaftsschule: [5, 13],
-  berufliches_gymnasium_berufskolleg: [11, 13],
-};
-
-const schoolTypeBlockedSubjects: Record<string, string[]> = {
-  realschule: ["latein"],
-  haupt_mittel_schule: ["latein"],
+const schoolTypeProfiles: Record<
+  string,
+  {
+    gradeRange: [number, number];
+    allowedSubjects?: string[];
+    blockedSubjects?: string[];
+  }
+> = {
+  gymnasium: {
+    gradeRange: [5, 13],
+  },
+  realschule: {
+    gradeRange: [5, 10],
+    allowedSubjects: [
+      "deutsch",
+      "englisch",
+      "mathematik",
+      "religion",
+      "ethik_philosophie",
+      "geschichte",
+      "geographie",
+      "politik_sozialkunde",
+      "biologie",
+      "physik",
+      "chemie",
+      "musik",
+      "informatik",
+      "franzoesisch",
+      "bwr",
+    ],
+  },
+  haupt_mittel_schule: {
+    gradeRange: [5, 10],
+    allowedSubjects: [
+      "deutsch",
+      "englisch",
+      "mathematik",
+      "religion",
+      "ethik_philosophie",
+      "geschichte",
+      "geographie",
+      "politik_sozialkunde",
+      "nwt",
+      "musik",
+      "informatik",
+      "bwr",
+    ],
+  },
+  gesamtschule_gemeinschaftsschule: {
+    gradeRange: [5, 13],
+  },
+  berufliches_gymnasium_berufskolleg: {
+    gradeRange: [11, 13],
+    blockedSubjects: ["latein"],
+  },
 };
 
 function parseGrades(gradesValue: string) {
@@ -135,7 +179,7 @@ function getLevelForGrade(grade: number) {
 }
 
 function isGradeAllowedForSchoolType(grade: number, schoolType: string) {
-  const range = schoolTypeGradeRanges[schoolType];
+  const range = schoolTypeProfiles[schoolType]?.gradeRange;
 
   if (!range) {
     return true;
@@ -145,8 +189,21 @@ function isGradeAllowedForSchoolType(grade: number, schoolType: string) {
 }
 
 function isSubjectAllowedForSchoolType(subjectId: string, schoolType: string) {
-  const blocked = schoolTypeBlockedSubjects[schoolType] ?? [];
-  return !blocked.includes(subjectId);
+  const profile = schoolTypeProfiles[schoolType];
+
+  if (!profile) {
+    return true;
+  }
+
+  if (profile.allowedSubjects && !profile.allowedSubjects.includes(subjectId)) {
+    return false;
+  }
+
+  if (profile.blockedSubjects && profile.blockedSubjects.includes(subjectId)) {
+    return false;
+  }
+
+  return true;
 }
 
 export function LernTutorApp({ config }: { config: LernTutorConfig }) {
@@ -174,9 +231,9 @@ export function LernTutorApp({ config }: { config: LernTutorConfig }) {
   );
 
   const availableSubjects = subjects.filter((subject) =>
-    grade
+    grade && schoolType
       ? subject.gradesList.includes(Number(grade)) &&
-        (!schoolType || isSubjectAllowedForSchoolType(subject.id, schoolType))
+        isSubjectAllowedForSchoolType(subject.id, schoolType)
       : false,
   );
 
@@ -331,7 +388,7 @@ export function LernTutorApp({ config }: { config: LernTutorConfig }) {
                 }}
                 required
               >
-                <option value="">Bitte waehlen</option>
+                <option value="">{schoolType ? "Bitte waehlen" : "Bitte zuerst Schulart waehlen"}</option>
                 {availableGrades.map((entry) => (
                   <option key={entry} value={entry}>
                     Klasse {entry}
@@ -375,7 +432,13 @@ export function LernTutorApp({ config }: { config: LernTutorConfig }) {
                 }}
                 required
               >
-                <option value="">{grade ? "Fach waehlen" : "Bitte zuerst Klasse waehlen"}</option>
+                <option value="">
+                  {!schoolType
+                    ? "Bitte zuerst Schulart waehlen"
+                    : !grade
+                      ? "Bitte zuerst Klasse waehlen"
+                      : "Fach waehlen"}
+                </option>
                 {availableSubjects.map((entry) => (
                   <option key={entry.id} value={entry.id}>
                     {entry.label}
