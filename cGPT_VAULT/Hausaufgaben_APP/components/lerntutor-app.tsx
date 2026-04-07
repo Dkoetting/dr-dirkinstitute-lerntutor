@@ -230,8 +230,11 @@ export function LernTutorApp({ config }: { config: LernTutorConfig }) {
   const [videoFailed, setVideoFailed] = useState(false);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setSplashPhase("hide"), 900);
-    const t2 = setTimeout(() => setShowSplash(false), 1400);
+    const visibleMs = 6000;
+    const fadeMs = 360;
+
+    const t1 = setTimeout(() => setSplashPhase("hide"), visibleMs);
+    const t2 = setTimeout(() => setShowSplash(false), visibleMs + fadeMs + 40);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
@@ -348,7 +351,7 @@ export function LernTutorApp({ config }: { config: LernTutorConfig }) {
           className={`splash${splashPhase === "hide" ? " splash-hide" : ""}`}
           onClick={() => {
             setSplashPhase("hide");
-            setTimeout(() => setShowSplash(false), 250);
+            setTimeout(() => setShowSplash(false), 360);
           }}
           role="button"
           tabIndex={0}
@@ -356,7 +359,7 @@ export function LernTutorApp({ config }: { config: LernTutorConfig }) {
           onKeyDown={(event) => {
             if (event.key === "Enter" || event.key === " ") {
               setSplashPhase("hide");
-              setTimeout(() => setShowSplash(false), 250);
+              setTimeout(() => setShowSplash(false), 360);
             }
           }}
         >
