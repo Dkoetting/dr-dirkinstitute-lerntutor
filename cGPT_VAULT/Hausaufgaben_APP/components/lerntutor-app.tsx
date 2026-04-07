@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { SubjectRecord } from "@/lib/lerntutor-config";
 
 type LernTutorConfig = {
@@ -225,6 +225,18 @@ export function LernTutorApp({ config }: { config: LernTutorConfig }) {
   const [responseText, setResponseText] = useState("");
   const [session, setSession] = useState<SessionState | null>(null);
   const [feedback, setFeedback] = useState("");
+  const [showSplash, setShowSplash] = useState(true);
+  const [splashPhase, setSplashPhase] = useState<"show" | "hide">("show");
+  const [videoFailed, setVideoFailed] = useState(false);
+
+  useEffect(() => {
+    const t1 = setTimeout(() => setSplashPhase("hide"), 900);
+    const t2 = setTimeout(() => setShowSplash(false), 1400);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, []);
 
   const availableGrades = Array.from({ length: 9 }, (_, index) => index + 5).filter((entry) =>
     schoolType ? isGradeAllowedForSchoolType(entry, schoolType) : true,
@@ -331,6 +343,55 @@ export function LernTutorApp({ config }: { config: LernTutorConfig }) {
 
   return (
     <div className="page-shell">
+      {showSplash ? (
+        <div
+          className={`splash${splashPhase === "hide" ? " splash-hide" : ""}`}
+          onClick={() => {
+            setSplashPhase("hide");
+            setTimeout(() => setShowSplash(false), 250);
+          }}
+          role="button"
+          tabIndex={0}
+          aria-label="Splash schließen"
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              setSplashPhase("hide");
+              setTimeout(() => setShowSplash(false), 250);
+            }
+          }}
+        >
+          <div className="splash-media" aria-hidden="true">
+            {!videoFailed ? (
+              <video
+                autoPlay
+                muted
+                playsInline
+                loop
+                onError={() => setVideoFailed(true)}
+              >
+                <source src="/branding/splash.mp4" type="video/mp4" />
+              </video>
+            ) : null}
+          </div>
+
+          <div className="splash-card">
+            <div className="splash-brand">
+              <img className="splash-logo" src="/branding/Logo.jpg" alt="Dr. DirKInstitute" />
+              <div>
+                <p className="splash-title">
+                  <span>Dr. DirKInstitute</span>
+                  <span>LernTutor</span>
+                </p>
+                <p className="splash-sub">
+                  Tutor-Modus, Schulart, Klassenstufe und Fachauswahl. Schritt fuer Schritt.
+                </p>
+              </div>
+            </div>
+            <p className="splash-hint">Tippen oder klicken zum Ueberspringen.</p>
+          </div>
+        </div>
+      ) : null}
+
       <aside className="hero-panel">
         <p className="eyebrow">Aus Prompt wird Produkt</p>
         <h1>
@@ -411,6 +472,7 @@ export function LernTutorApp({ config }: { config: LernTutorConfig }) {
                   setSubjectId("");
                   setModeId("");
                 }}
+                disabled={!schoolType}
                 required
               >
                 <option value="">{schoolType ? "Bitte waehlen" : "Bitte zuerst Schulart waehlen"}</option>
@@ -430,6 +492,7 @@ export function LernTutorApp({ config }: { config: LernTutorConfig }) {
                   setSubjectId(event.target.value);
                   setModeId("");
                 }}
+                disabled={!schoolType || !grade}
                 required
               >
                 <option value="">
@@ -449,7 +512,12 @@ export function LernTutorApp({ config }: { config: LernTutorConfig }) {
 
             <label className="field">
               <span>Lernmodus</span>
-              <select value={modeId} onChange={(event) => setModeId(event.target.value)} required>
+              <select
+                value={modeId}
+                onChange={(event) => setModeId(event.target.value)}
+                disabled={!selectedSubject}
+                required
+              >
                 <option value="">{selectedSubject ? "Lernmodus waehlen" : "Bitte Fach waehlen"}</option>
                 {availableModes.map((entry) => (
                   <option key={entry} value={entry}>
